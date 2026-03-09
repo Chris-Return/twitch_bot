@@ -1,0 +1,25 @@
+name: Run Bot
+
+on:
+  schedule:
+    - cron: "0 16 * * *"  # tous les jours à 16h
+  workflow_dispatch:     # permet de lancer manuellement
+
+jobs:
+  run-script:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Télécharger le repo
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer dépendances
+        run: pip install -r requirements.txt
+
+      - name: Lancer le script
+        run: python main.py
