@@ -2,8 +2,8 @@ name: Run Bot
 
 on:
   schedule:
-    - cron: "0 16 * * *"  # tous les jours à 16h
-  workflow_dispatch:     # permet de lancer manuellement
+    - cron: "0 15 * * *"
+  workflow_dispatch:
 
 jobs:
   run-script:
@@ -17,9 +17,6 @@ jobs:
         uses: actions/setup-python@v5
         with:
           python-version: "3.11"
-
-      - name: Installer dépendances
-        run: pip install -r requirements.txt
 
       - name: Lancer le script
         run: python main.py
