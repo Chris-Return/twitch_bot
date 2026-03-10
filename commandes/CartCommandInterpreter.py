@@ -12,11 +12,11 @@ class CartCommandInterpreter(CommandInterpreter):
         self.cartPhrasesList = [
             "@{username} ouais il a l'habitude de cart, ça fait {counter} fois aujourd'hui.",
             "@{username} c'est le genre de mec qui rejoint ta quête pour la foirer. ça fait {counter} cart.",
-            "@{username} j'te dis pas la chute de DPS là. On est à {counter} cart."
-            "@{username} c'est une dinguerie de mourir là dessus. Il a cart {counter} fois."
-            "Pour te dire la vérité @{username} il n'a jamais vraiment été bon sur ce jeu. ({counter} cart)"
-            "@{username} quand tu cart {counter} fois dans la même journée il faut savoir se remettre en question."
-            "Si encore il faisait un effort @{username} j'dis pas... Mais bon ça fait {counter} cart."
+            "@{username} j'te dis pas la chute de DPS là. On est à {counter} cart.",
+            "@{username} c'est une dinguerie de mourir là dessus. Il a cart {counter} fois.",
+            "Pour te dire la vérité @{username} il n'a jamais vraiment été bon sur ce jeu. ({counter} cart)",
+            "@{username} quand tu cart {counter} fois dans la même journée il faut savoir se remettre en question.",
+            "Si encore il faisait un effort @{username} j'dis pas... Mais bon ça fait {counter} cart.",
             "Au pire @"+constantes.CHANNEL_NAME+" tu peux lancer une game d'Animal Crossing... ({counter} cart)"
         ]
 
