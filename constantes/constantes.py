@@ -1,10 +1,12 @@
-TWITCH_IRC_URL = "irc.chat.twitch.tv"
-TWITCH_IRC_PORT = 6667
+from dotenv import load_dotenv
+import os
 
-TWITCH_USERNAME = "cheffouhighbot"
-TWITCH_RETURN_USERNAME = "ChrisReturn"
+load_dotenv()
 
-TWITCH_OAUTH_TOKEN = "oauth:ek6yf9u2brkxmui8xexmybyrij6w2h"
-TWITCH_RETURN_OAUTH_TOKEN = "oauth:lmy7nvhcoqcbqlvd8fyzoo8n35ajib"
+TWITCH_IRC_URL = os.getenv("TWITCH_IRC_URL", "irc.chat.twitch.tv")
+TWITCH_IRC_PORT = int(os.getenv("TWITCH_IRC_PORT", 6667))
 
-CHANNEL_NAME = "chefspirite"  # sans le #
+TWITCH_USERNAME = os.getenv("TWITCH_USERNAME")
+TWITCH_OAUTH_TOKEN = os.getenv("TWITCH_OAUTH_TOKEN")
+
+CHANNEL_NAME = os.getenv("CHANNEL_NAME")

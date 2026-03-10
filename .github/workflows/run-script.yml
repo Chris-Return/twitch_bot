@@ -19,5 +19,14 @@ jobs:
         with:
           python-version: "3.11"
 
+      - name: Installer les dépendances
+        run: pip install -r requirements.txt
+
       - name: Lancer le script
+        env:
+          TWITCH_IRC_URL: ${{ secrets.TWITCH_IRC_URL }}
+          TWITCH_IRC_PORT: ${{ secrets.TWITCH_IRC_PORT }}
+          TWITCH_USERNAME: ${{ secrets.TWITCH_USERNAME }}
+          TWITCH_OAUTH_TOKEN: ${{ secrets.TWITCH_OAUTH_TOKEN }}
+          CHANNEL_NAME: ${{ secrets.CHANNEL_NAME }}
         run: python main.py
