@@ -32,7 +32,7 @@ class AyaCommandInterpreter(CommandInterpreter):
                 response = phrase.format(username=username, counter=self.counter)
 
                 msg = (
-                    f"{username} hey c'est bon j'en ai marre de compter maintenant"
+                    f"{username} hey c'est bon j'en ai marre de compter maintenant zeubi."
                     if self.counter == 10
                     else response
                 )
@@ -42,5 +42,5 @@ class AyaCommandInterpreter(CommandInterpreter):
 
             else:
                 remaining = int(self.cooldown - (time.time() - self.last_used))
-                response = f"Commande !aya en cooldown de {remaining} seconde(s)"
+                response = f"Commande !aya est en cooldown de {remaining} seconde(s)"
                 twSock.sendMessage(response)
