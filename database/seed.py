@@ -1,5 +1,6 @@
 from database import SessionLocal
 from models.Role import Role
+from supabase_client import supabase
 
 def seed_roles():
     """Initialise les rôles par défaut si aucun rôle n’existe"""
@@ -20,3 +21,16 @@ def seed_roles():
         print("Erreur lors de l'initialisation des rôles :", e)
     finally:
         session.close()
+
+def seed_roles_api():
+    # Vérifie si la table "Role" est vide
+    response = supabase.table("roles").select("*").execute()
+    roles = response.data
+
+    if not roles:
+        print("Aucun rôle trouvé, ajout des rôles par défaut...")
+        default_roles = [{"name": "ADMIN"}, {"name": "VIEWER"}]
+        supabase.table("roles").insert(default_roles).execute()
+        print("Rôles par défaut ajoutés !")
+    else:
+        print(f"{len(roles)} rôle(s) déjà présent(s), aucune action nécessaire.")

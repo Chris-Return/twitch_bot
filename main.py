@@ -2,13 +2,13 @@ from twitchsocket.TwitchSocket import TwitchSocket
 from constantes import constantes
 from commandes.MessageManager import MessageManager
 from database.init_db import init_db
-from database.seed import seed_roles
+from database.seed import seed_roles_api
 
 
 def main():
     init_db()
     print("Database initialized")
-    seed_roles()
+    seed_roles_api()
 
 
 def connect_to_twitch():
