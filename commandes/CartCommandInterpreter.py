@@ -17,7 +17,9 @@ class CartCommandInterpreter(CommandInterpreter):
             "Pour te dire la vérité @{username} il n'a jamais vraiment été bon sur ce jeu. ({counter} cart)",
             "@{username} quand tu cart {counter} fois dans la même journée il faut savoir se remettre en question.",
             "Si encore il faisait un effort @{username} j'dis pas... Mais bon ça fait {counter} cart.",
-            "Au pire @"+constantes.CHANNEL_NAME+" tu peux lancer une game d'Animal Crossing... ({counter} cart)"
+            "Au pire @"+constantes.CHANNEL_NAME+" tu peux lancer une game d'Animal Crossing... ({counter} cart)",
+            "Bon ok en vrai @{username} ça peut arriver de cart {counter} fois sur un malentendu.",
+            "@{username} y'a des gens qui savent jouer à Monster hunter, et puis y'a "+constantes.CHANNEL_NAME+" qui cart {counter} fois."
         ]
 
     def execute(self, username, message, twSock):
@@ -30,7 +32,7 @@ class CartCommandInterpreter(CommandInterpreter):
 
                 msg = (
                     f"{username} C'est tellement une catastrophe que je n'ai même plus envie de compter."
-                    if self.counter == 5
+                    if self.counter == 10
                     else response
                 )
 
