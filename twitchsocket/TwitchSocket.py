@@ -19,10 +19,11 @@ class TwitchSocket:
         return self.sock.recv(2048).decode("utf-8", errors="ignore")
 
     def sendPong(self):
-        self.sock.send("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
+        self.sock.sendall("PONG :tmi.twitch.tv\r\n".encode("utf-8"))
 
     def sendMessage(self, msg):
-        self.sock.send(f"PRIVMSG #{constantes.CHANNEL_NAME} :{msg}\r\n".encode("utf-8"))
+        line = f"PRIVMSG #{constantes.CHANNEL_NAME} :{msg}"
+        self.sock.sendall((line + "\r\n").encode("utf-8"))
 
     def sendLine(self, line):
-        self.sock.send(f"{line}\r\n".encode("utf-8"))
+        self.sock.sendall(f"{line}\r\n".encode("utf-8"))

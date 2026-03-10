@@ -38,7 +38,6 @@ class AyaCommandInterpreter(CommandInterpreter):
                 )
 
                 twSock.sendMessage(msg)
-                twSock.sendMessage(response)
                 self.last_used = time.time()
 
             else:
