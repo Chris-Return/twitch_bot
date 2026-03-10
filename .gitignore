@@ -1,6 +1,7 @@
 # Python cache
 __pycache__/
 *.py[cod]
+tasks.json
 
 # Environnements virtuels
 venv/

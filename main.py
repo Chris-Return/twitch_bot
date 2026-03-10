@@ -1,6 +1,15 @@
 from twitchsocket.TwitchSocket import TwitchSocket
 from constantes import constantes
 from commandes.MessageManager import MessageManager
+from database.init_db import init_db
+from database.seed import seed_roles
+
+
+def main():
+    init_db()
+    print("Database initialized")
+    seed_roles()
+
 
 def connect_to_twitch():
     
@@ -61,4 +70,10 @@ def connect_to_twitch():
                     #TODO : Préparer un propagationReward
 
 if __name__ == "__main__":
-    connect_to_twitch()
+    main()
+    try:
+        connect_to_twitch()  # ta boucle principale
+    except KeyboardInterrupt:
+        print("Arrêt du bot")
+    finally:
+        print("Fermeture des connexions")
