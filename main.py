@@ -70,7 +70,7 @@ def connect_to_twitch():
                     #TODO : Préparer un propagationReward
 
 if __name__ == "__main__":
-    main()
+    #main()
     try:
         connect_to_twitch()  # ta boucle principale
     except KeyboardInterrupt:
