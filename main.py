@@ -10,7 +10,7 @@ from database.init_db import init_db
 from database.seed import seed_roles
 from sqlalchemy.orm import close_all_sessions
 
-MAX_RUNTIME_MINUTES = 1
+MAX_RUNTIME_MINUTES = 260
 running = True
 
 def shutdown_handler(signum, frame):

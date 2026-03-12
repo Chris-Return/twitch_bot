@@ -1,12 +1,13 @@
 name: Run Script With DB
 
 on:
-  workflow_dispatch
+  schedule:
+    - cron: "0 15 * * *"
+  workflow_dispatch:
 
 jobs:
   run-script-with-db:
     runs-on: ubuntu-latest
-    timeout-minutes: 260
 
     steps:
       - name: Télécharger le repo
