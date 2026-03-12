@@ -23,7 +23,7 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Télécharger la dernière DB
+      - name: Télécharger la dernière BDD
         uses: dawidd6/action-download-artifact@v3
         continue-on-error: true
         with:
@@ -34,7 +34,7 @@ jobs:
       - name: Vérifier les fichiers téléchargés
         run: ls -lh
 
-      - name: Décompresser la DB si elle existe
+      - name: Décompresser la BDD
         run: |
           if [ -f backup.db.gz ]; then
             echo "DB compressée trouvée, décompression..."
@@ -44,7 +44,7 @@ jobs:
             echo "Aucune DB précédente trouvée"
           fi
 
-      - name: Lancer le script
+      - name: Lancement du bot
         env:
           TWITCH_IRC_URL: ${{ secrets.TWITCH_IRC_URL }}
           TWITCH_IRC_PORT: ${{ secrets.TWITCH_IRC_PORT }}
@@ -53,7 +53,7 @@ jobs:
           CHANNEL_NAME: ${{ secrets.CHANNEL_NAME }}
         run: exec python main.py
 
-      - name: Sauvegarde SQLite propre
+      - name: Sauvegarde SQLite
         if: always()
         run: |
           if [ -f bot.db ]; then

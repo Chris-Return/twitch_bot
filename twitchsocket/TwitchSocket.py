@@ -27,3 +27,6 @@ class TwitchSocket:
 
     def sendLine(self, line):
         self.sock.sendall(f"{line}\r\n".encode("utf-8"))
+
+    def close(self):
+        self.sock.close()
