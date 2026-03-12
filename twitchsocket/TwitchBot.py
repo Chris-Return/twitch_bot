@@ -1,3 +1,4 @@
+import os
 import select
 import time
 from twitchsocket.TwitchSocket import TwitchSocket
@@ -7,7 +8,7 @@ from commandes.MessageManager import MessageManager
 from services.signal_handlers import running_flag
 from twitchsocket.ShutdownBot import shutdown_bot
 
-MAX_RUNTIME_MINUTES = 260
+MAX_RUNTIME_MINUTES = int(os.getenv("MAX_RUNTIME_MINUTES", "260"))
 
 def connect_to_twitch():
     twSock = TwitchSocket()
