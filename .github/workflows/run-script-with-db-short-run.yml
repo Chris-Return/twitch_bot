@@ -1,0 +1,78 @@
+name: Run Script With DB Short Run
+
+on:
+  workflow_dispatch
+
+jobs:
+  run-script-with-db:
+    runs-on: ubuntu-latest
+    timeout-minutes: 1
+
+    steps:
+      - name: Télécharger le repo
+        uses: actions/checkout@v4
+
+      - name: Installer Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Installer les dépendances
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -r requirements.txt
+
+      - name: Télécharger la dernière DB
+        uses: dawidd6/action-download-artifact@v3
+        continue-on-error: true
+        with:
+          name: sqlite-db
+          path: .
+          if_no_artifact_found: warn
+
+      - name: Vérifier les fichiers téléchargés
+        run: ls -lh
+
+      - name: Décompresser la DB si elle existe
+        run: |
+          if [ -f backup.db.gz ]; then
+            echo "DB compressée trouvée, décompression..."
+            gunzip -f backup.db.gz
+            mv backup.db bot.db
+          else
+            echo "Aucune DB précédente trouvée"
+          fi
+
+      - name: Lancer le script
+        env:
+          TWITCH_IRC_URL: ${{ secrets.TWITCH_IRC_URL }}
+          TWITCH_IRC_PORT: ${{ secrets.TWITCH_IRC_PORT }}
+          TWITCH_USERNAME: ${{ secrets.TWITCH_USERNAME }}
+          TWITCH_OAUTH_TOKEN: ${{ secrets.TWITCH_OAUTH_TOKEN }}
+          CHANNEL_NAME: ${{ secrets.CHANNEL_NAME }}
+        run: exec python main.py
+
+      - name: Sauvegarde SQLite propre
+        if: always()
+        run: |
+          if [ -f bot.db ]; then
+            echo "Création backup SQLite..."
+            sqlite3 bot.db ".backup backup.db"
+          else
+            echo "bot.db introuvable"
+          fi
+
+      - name: Compresser la sauvegarde
+        if: always()
+        run: |
+          if [ -f backup.db ]; then
+            gzip -f backup.db
+          fi
+
+      - name: Sauvegarder la DB compressée
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: sqlite-db
+          path: backup.db.gz
+          retention-days: 30
