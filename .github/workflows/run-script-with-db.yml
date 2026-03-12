@@ -33,9 +33,6 @@ jobs:
           if [ -f bot.db.gz ]; then
             echo "DB compressée trouvée, décompression..."
             gunzip -f bot.db.gz
-          else
-            echo "Aucune DB existante compressée, création d'une nouvelle DB"
-            touch bot.db
           fi
 
       - name: Lancer le script
@@ -45,13 +42,14 @@ jobs:
           TWITCH_USERNAME: ${{ secrets.TWITCH_USERNAME }}
           TWITCH_OAUTH_TOKEN: ${{ secrets.TWITCH_OAUTH_TOKEN }}
           CHANNEL_NAME: ${{ secrets.CHANNEL_NAME }}
-        run: python main.py
+        run: exec python main.py
 
       - name: Compresser la DB avant upload
-        run: |
-          gzip -f bot.db
+        if: always()
+        run: gzip -f bot.db
 
       - name: Sauvegarder la DB compressée
+        if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sqlite-db

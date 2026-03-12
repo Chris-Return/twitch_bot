@@ -6,6 +6,7 @@ bot.db
 bot.db.gz
 bot.db-wal
 bot.db-shm
+.vscode
 
 # Environnements virtuels
 venv/

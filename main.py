@@ -1,6 +1,5 @@
 import signal
 import select
-import sys
 
 from twitchsocket.TwitchSocket import TwitchSocket
 from constantes import constantes
