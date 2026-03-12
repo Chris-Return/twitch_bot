@@ -2,13 +2,13 @@ from twitchsocket.TwitchSocket import TwitchSocket
 from constantes import constantes
 from commandes.MessageManager import MessageManager
 from database.init_db import init_db
-from database.seed import seed_roles_api
+from database.seed import seed_roles
 
 
 def main():
     init_db()
     print("Database initialized")
-    seed_roles_api()
+    seed_roles()
 
 
 def connect_to_twitch():
@@ -35,7 +35,6 @@ def connect_to_twitch():
                 twSock.sendPong()
                 continue
 
-            # Auth échoue ?
             if "Login authentication failed" in line:
                 print("ERREUR AUTHENTIFICATION")
 
@@ -70,9 +69,9 @@ def connect_to_twitch():
                     #TODO : Préparer un propagationReward
 
 if __name__ == "__main__":
-    #main()
+    main()
     try:
-        connect_to_twitch()  # ta boucle principale
+        connect_to_twitch()
     except KeyboardInterrupt:
         print("Arrêt du bot")
     finally:
