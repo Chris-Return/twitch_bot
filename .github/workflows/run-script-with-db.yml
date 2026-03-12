@@ -22,11 +22,16 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install -r requirements.txt
 
-      - name: Télécharger la DB précédente
-        uses: actions/download-artifact@v4
+      - name: Télécharger la dernière DB
+        uses: dawidd6/action-download-artifact@v3
         continue-on-error: true
         with:
           name: sqlite-db
+          path: .
+          if_no_artifact_found: warn
+
+      - name: Vérifier les fichiers téléchargés
+        run: ls -lh
 
       - name: Décompresser la DB si elle existe
         run: |
@@ -34,6 +39,8 @@ jobs:
             echo "DB compressée trouvée, décompression..."
             gunzip -f backup.db.gz
             mv backup.db bot.db
+          else
+            echo "Aucune DB précédente trouvée"
           fi
 
       - name: Lancer le script
