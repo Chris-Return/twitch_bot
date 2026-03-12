@@ -30,9 +30,10 @@ jobs:
 
       - name: Décompresser la DB si elle existe
         run: |
-          if [ -f bot.db.gz ]; then
+          if [ -f backup.db.gz ]; then
             echo "DB compressée trouvée, décompression..."
-            gunzip -f bot.db.gz
+            gunzip -f backup.db.gz
+            mv backup.db bot.db
           fi
 
       - name: Lancer le script
@@ -44,14 +45,27 @@ jobs:
           CHANNEL_NAME: ${{ secrets.CHANNEL_NAME }}
         run: exec python main.py
 
-      - name: Compresser la DB avant upload
+      - name: Sauvegarde SQLite propre
         if: always()
-        run: gzip -f bot.db
+        run: |
+          if [ -f bot.db ]; then
+            echo "Création backup SQLite..."
+            sqlite3 bot.db ".backup backup.db"
+          else
+            echo "bot.db introuvable"
+          fi
+
+      - name: Compresser la sauvegarde
+        if: always()
+        run: |
+          if [ -f backup.db ]; then
+            gzip -f backup.db
+          fi
 
       - name: Sauvegarder la DB compressée
         if: always()
         uses: actions/upload-artifact@v4
         with:
           name: sqlite-db
-          path: bot.db.gz
+          path: backup.db.gz
           retention-days: 30
