@@ -1,5 +1,6 @@
 import signal
 import select
+import time
 
 from twitchsocket.TwitchSocket import TwitchSocket
 from constantes import constantes
@@ -9,6 +10,7 @@ from database.init_db import init_db
 from database.seed import seed_roles
 from sqlalchemy.orm import close_all_sessions
 
+MAX_RUNTIME_MINUTES = 1
 running = True
 
 def shutdown_handler(signum, frame):
@@ -16,16 +18,13 @@ def shutdown_handler(signum, frame):
     print(f"Signal {signum} reçu, arrêt du bot...", flush=True)
     running = False
 
-
 signal.signal(signal.SIGTERM, shutdown_handler)
 signal.signal(signal.SIGINT, shutdown_handler)
-
 
 def main():
     init_db()
     print("Database initialized", flush=True)
     seed_roles()
-
 
 def connect_to_twitch():
     global running
@@ -38,7 +37,16 @@ def connect_to_twitch():
     messageManager = MessageManager()
     buffer = ""
 
+    start_time = time.time()
+    max_runtime_seconds = MAX_RUNTIME_MINUTES * 60
+
     while running:
+        # Arrêt automatique si le temps est écoulé
+        if time.time() - start_time >= max_runtime_seconds:
+            print(f"Temps maximum de {MAX_RUNTIME_MINUTES} minutes atteint, arrêt automatique...", flush=True)
+            running = False
+            break
+
         try:
             ready, _, _ = select.select([sock], [], [], 1)
 
@@ -52,7 +60,6 @@ def connect_to_twitch():
             buffer = lines.pop() 
 
             for line in lines:
-
                 if not line:
                     continue
 
@@ -96,13 +103,11 @@ def connect_to_twitch():
                             flush=True,
                         )
 
-                        # TODO: propager les rewards récupérés
-
         except Exception as e:
             print("Erreur dans la boucle principale :", e, flush=True)
 
     print("Fermeture du socket Twitch et des sessions SQLite...", flush=True)
-
+    
     try:
         twSock.close()
     except Exception as e:
@@ -114,7 +119,6 @@ def connect_to_twitch():
         print("Erreur fermeture sessions SQLite :", e, flush=True)
 
     print("Bot arrêté proprement", flush=True)
-
 
 if __name__ == "__main__":
     main()
