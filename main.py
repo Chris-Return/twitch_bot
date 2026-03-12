@@ -10,7 +10,6 @@ from database.init_db import init_db
 from database.seed import seed_roles
 from sqlalchemy.orm import close_all_sessions
 
-
 running = True
 
 def shutdown_handler(signum, frame):
@@ -42,7 +41,6 @@ def connect_to_twitch():
 
     while running:
         try:
-            # Attend jusqu'à 1 seconde qu'il y ait des données sur le socket
             ready, _, _ = select.select([sock], [], [], 1)
 
             if not ready:
@@ -52,23 +50,20 @@ def connect_to_twitch():
             buffer += resp
 
             lines = buffer.split("\r\n")
-            buffer = lines.pop()  # dernière ligne incomplète
+            buffer = lines.pop() 
 
             for line in lines:
 
                 if not line:
                     continue
 
-                # Répondre aux PING Twitch
                 if line.startswith("PING"):
                     twSock.sendPong()
                     continue
 
-                # Auth échouée
                 if "Login authentication failed" in line:
                     print("ERREUR AUTHENTIFICATION", flush=True)
 
-                # Messages chat
                 if "PRIVMSG" in line:
                     try:
                         username = line.split("display-name=", 1)[1].split(";", 1)[0]
@@ -80,7 +75,6 @@ def connect_to_twitch():
                         print("Erreur parsing :", line, flush=True)
                         print("Exception :", e, flush=True)
 
-                # Channel Points
                 if "USERNOTICE" in line:
                     tags_part = line.split(" ", 1)[0]
 
@@ -103,6 +97,8 @@ def connect_to_twitch():
                             flush=True,
                         )
 
+                        # TODO: propager les rewards récupérés
+
         except Exception as e:
             print("Erreur dans la boucle principale :", e, flush=True)
 
@@ -112,7 +108,7 @@ def connect_to_twitch():
         twSock.close()
     except Exception as e:
         print("Erreur fermeture socket :", e, flush=True)
-        
+
     try:
         close_all_sessions()
     except Exception as e:
