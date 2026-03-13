@@ -1,8 +1,6 @@
 name: Run Script With DB
 
 on:
-  schedule:
-    - cron: "0 15 * * *"
   workflow_dispatch:
 
 jobs:
@@ -51,7 +49,7 @@ jobs:
           TWITCH_USERNAME: ${{ secrets.TWITCH_USERNAME }}
           TWITCH_OAUTH_TOKEN: ${{ secrets.TWITCH_OAUTH_TOKEN }}
           CHANNEL_NAME: ${{ secrets.CHANNEL_NAME }}
-          MAX_RUNTIME_MINUTES: ${{ secrets.MAX_RUNTIME_MINUTES }}
+          MAX_RUNTIME_MINUTES: ${{ vars.MAX_RUNTIME_MINUTES }}
         run: exec python main.py
 
       - name: Sauvegarde SQLite
