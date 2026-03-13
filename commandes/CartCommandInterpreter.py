@@ -6,6 +6,7 @@ import random
 class CartCommandInterpreter(CommandInterpreter):
     def __init__(self, cooldown=10):
         super().__init__(cooldown)
+        self.activationCommand = "!cart"
         self.counter = 0
         self.actualTag = "MonsterHunter"
 
@@ -23,23 +24,15 @@ class CartCommandInterpreter(CommandInterpreter):
         ]
 
     def execute(self, username, message, twSock):
-        if "!cart" in message.lower():
-            if self.can_execute():
-                self.counter += 1
+        self.counter += 1
+        phrase = random.choice(self.cartPhrasesList)
+        response = phrase.format(username=username, counter=self.counter)
 
-                phrase = random.choice(self.cartPhrasesList)
-                response = phrase.format(username=username, counter=self.counter)
+        msg = (
+            f"@{username} C'est tellement une catastrophe que je n'ai même plus envie de compter."
+            if self.counter == 10
+            else response
+        )
 
-                msg = (
-                    f"{username} C'est tellement une catastrophe que je n'ai même plus envie de compter."
-                    if self.counter == 10
-                    else response
-                )
-
-                twSock.sendMessage(msg)
-                self.last_used = time.time()
-        
-            else:
-                remaining = int(self.cooldown - (time.time() - self.last_used))
-                response = f"Commande !cart est en cooldown de {remaining} seconde(s)"
-                twSock.sendMessage(response)
+        twSock.sendMessage(msg)
+        self.last_used = time.time()

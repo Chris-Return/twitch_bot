@@ -1,6 +1,7 @@
 from .AyaCommandInterpreter import AyaCommandInterpreter
 from .CartCommandInterpreter import CartCommandInterpreter
 from .ReveilCommandInterpreter import ReveilCommandInterpreter
+import time
 
 class MessageManager:
     def __init__(self):
@@ -14,6 +15,11 @@ class MessageManager:
     def propagation(self, username, message, twSock):
         for interpreter in self.interpreters:
             try:
-                interpreter.execute(username, message, twSock)
+                if interpreter.activationCommand in message.lower():
+                    if interpreter.can_execute():
+                        interpreter.execute(username, message, twSock)
+                    else:
+                        remaining = int(interpreter.cooldown - (time.time() - interpreter.last_used))
+                        twSock.sendMessage(f"{interpreter.activationCommand} en cooldown ({remaining})s")
             except Exception as e:
                 print(f"Erreur dans l'interpreter {interpreter}: {e}")

@@ -4,9 +4,8 @@ import time
 class ReveilCommandInterpreter(CommandInterpreter):
     def __init__(self, cooldown=10):
         super().__init__(cooldown)
+        self.activationCommand = "!reveil"
 
     def execute(self, username, message, twSock):
-        if "!reveil" in message.lower():
-            if self.can_execute():
-                twSock.sendMessage("Hein quoi ? J'suis là moi ! @"+username)
-                self.last_used = time.time()
+        twSock.sendMessage("Hein quoi ? J'suis là moi ! @"+username)
+        self.last_used = time.time()

@@ -5,6 +5,7 @@ import random
 class AyaCommandInterpreter(CommandInterpreter):
     def __init__(self, cooldown=10):
         super().__init__(cooldown)
+        self.activationCommand = "!aya"
         self.counter = 0
 
         # Liste des phrases possibles
@@ -18,29 +19,15 @@ class AyaCommandInterpreter(CommandInterpreter):
         ]
 
     def execute(self, username, message, twSock):
-        if "#r3set" in message.lower():
-            self.counter = 0
+        self.counter += 1
+        phrase = random.choice(self.ayaPhrasesList)
+        response = phrase.format(username=username, counter=self.counter)
 
-        if "!aya" in message.lower():
-            if self.can_execute():
-                self.counter += 1
+        msg = (
+            f"@{username} hey c'est bon j'en ai marre de compter maintenant zeubi."
+            if self.counter == 10
+            else response
+        )
 
-                # Choisit une phrase aléatoire
-                phrase = random.choice(self.ayaPhrasesList)
-
-                # Remplace les variables
-                response = phrase.format(username=username, counter=self.counter)
-
-                msg = (
-                    f"{username} hey c'est bon j'en ai marre de compter maintenant zeubi."
-                    if self.counter == 10
-                    else response
-                )
-
-                twSock.sendMessage(msg)
-                self.last_used = time.time()
-
-            else:
-                remaining = int(self.cooldown - (time.time() - self.last_used))
-                response = f"Commande !aya est en cooldown de {remaining} seconde(s)"
-                twSock.sendMessage(response)
+        twSock.sendMessage(msg)
+        self.last_used = time.time()
