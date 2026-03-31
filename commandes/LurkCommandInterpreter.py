@@ -1,0 +1,36 @@
+from .CommandInterpreter import CommandInterpreter
+from constantes import constantes
+import time
+import random
+
+class LurkCommandInterpreter(CommandInterpreter):
+    def __init__(self, cooldown=3):
+        super().__init__(cooldown)
+        self.activationCommand = "!lurk"
+        self.counter = 0
+        self.actualTag = ""
+
+        self.lurkPhrasesList = [
+            "@{username} merci pour ton lurk !",
+            "Reviens nous vite @{username} !",
+            "Merci pour le soutient @{username} <3"
+        ]
+
+        self.ennemiPhrasesList = [
+            "@{username} Prend ton temps pour revenir surtout...",
+            "@{username} Alléluia il est parti.",
+            "@{username} On va enfin pouvoir respirer.",
+            "@{username} Nice, on t'aime mais a petites doses."
+        ]
+
+    def execute(self, username, message, twSock):
+        if username == "Zarakaih":
+            phrase = random.choice(self.ennemiPhrasesList)
+            response = phrase.format(username=username, counter=self.counter)
+            twSock.sendMessage(response)
+            self.last_used = time.time()
+        else:
+            phrase = random.choice(self.lurkPhrasesList)
+            response = phrase.format(username=username, counter=self.counter)
+            twSock.sendMessage(response)
+            self.last_used = time.time()

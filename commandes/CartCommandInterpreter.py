@@ -20,7 +20,7 @@ class CartCommandInterpreter(CommandInterpreter):
             "Si encore il faisait un effort @{username} j'dis pas... Mais bon ça fait {counter} cart.",
             "Au pire @"+constantes.CHANNEL_NAME+" tu peux lancer une game d'Animal Crossing... ({counter} cart)",
             "Bon ok en vrai @{username} ça peut arriver de cart {counter} fois sur un malentendu.",
-            "@{username} y'a des gens qui savent jouer à Monster hunter, et puis y'a "+constantes.CHANNEL_NAME+" qui cart {counter} fois."
+            "@{username} y'a des gens qui savent jouer, et puis y'a "+constantes.CHANNEL_NAME+" qui cart {counter} fois."
         ]
 
     def execute(self, username, message, twSock):
