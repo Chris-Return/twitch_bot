@@ -2,6 +2,7 @@ from .AyaCommandInterpreter import AyaCommandInterpreter
 from .CartCommandInterpreter import CartCommandInterpreter
 from .ReveilCommandInterpreter import ReveilCommandInterpreter
 from .LurkCommandInterpreter import LurkCommandInterpreter
+from .InsulteIACommandInterpreter import InsulteIACommandInterpreter
 import time
 
 class MessageManager:
@@ -9,7 +10,8 @@ class MessageManager:
         self.interpreters = [AyaCommandInterpreter(cooldown=10),
                              CartCommandInterpreter(cooldown=10),
                              ReveilCommandInterpreter(cooldown=10),
-                             LurkCommandInterpreter(cooldown=3)]
+                             LurkCommandInterpreter(cooldown=3),
+                             InsulteIACommandInterpreter(cooldown=30)]
 
     def register_interpreter(self, interpreter):
         self.interpreters.append(interpreter)

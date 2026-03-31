@@ -6,7 +6,7 @@ from constantes import constantes
 from commandes.MessageManager import MessageManager
 from services.signal_handlers import running_flag
 from twitchsocket.ShutdownBot import shutdown_bot
-from workers.user_worker import enqueue_user
+from workers.user_worker import enqueue_message
 
 MAX_RUNTIME_MINUTES = int(os.getenv("MAX_RUNTIME_MINUTES", "300"))
 
@@ -53,7 +53,7 @@ def connect_to_twitch():
                     try:
                         username = line.split("display-name=", 1)[1].split(";", 1)[0]
                         message = line.split("PRIVMSG", 1)[1].split(":", 1)[1]
-                        enqueue_user(username)
+                        enqueue_message(username, message)
                         messageManager.propagation(username, message, twSock)
                     except Exception as e:
                         print("Erreur parsing :", line, flush=True)

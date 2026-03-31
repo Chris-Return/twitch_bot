@@ -10,3 +10,4 @@ class AppUser(Base):
     pseudo: Mapped[str] = mapped_column(String, unique=True, index=True)
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
     role = relationship("Role", back_populates="users")
+    messages = relationship("ChatMessage", back_populates="user")
