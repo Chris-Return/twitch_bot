@@ -33,7 +33,7 @@ class InsulteIACommandInterpreter(CommandInterpreter):
         try:
             pique = self.gemini_bot.envoyer_message(prompt)
             if pique:
-                twSock.sendMessage(f"@{cible} {pique}")
+                twSock.sendMessage(f"@{username} {pique}")
                 
         except Exception as e:
             print(f"Erreur lors de la commande !insulte : {e}")
