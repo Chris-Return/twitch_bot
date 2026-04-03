@@ -2,6 +2,7 @@ from database.session import get_session
 from models.AppUser import AppUser
 from models.ChatMessage import ChatMessage
 from sqlalchemy import desc
+from sqlalchemy import func
 
 def save_twitch_message(username, content, skip_user_check=False):
     with get_session() as db:
@@ -28,7 +29,7 @@ def get_last_messages_from_db(pseudo, limit=40):
         messages = (
             db.query(ChatMessage.content)
             .join(AppUser)
-            .filter(AppUser.pseudo == pseudo)
+            .filter(func.lower(AppUser.pseudo) == pseudo.lower())
             .order_by(desc(ChatMessage.created_at))
             .limit(limit)
             .all()
