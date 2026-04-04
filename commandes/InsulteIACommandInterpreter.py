@@ -36,4 +36,4 @@ class InsulteIACommandInterpreter(CommandInterpreter):
                 twSock.sendMessage(f"{pique}")
                 
         except Exception as e:
-            print(f"Erreur lors de la commande !insulte : {e}")
+            print(f"Erreur lors de la commande !insulte : {e}", flush=True)
