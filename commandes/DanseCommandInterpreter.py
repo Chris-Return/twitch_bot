@@ -1,5 +1,6 @@
 from .CommandInterpreter import CommandInterpreter
 import time
+import random
 
 class DanseCommandInterpreter(CommandInterpreter):
     def __init__(self, cooldown=100):
@@ -8,8 +9,8 @@ class DanseCommandInterpreter(CommandInterpreter):
         self.actualTag = ""
 
     def execute(self, username, message, twSock):
-        print("Passage dans Danse")
-        print(username)
         if username in ["ChrisReturn", "minmaj", "Zarakaih"]:
-            twSock.sendMessage("On s'ambiance ici zebi !")
+            nombre_danse = random.randint(3, 8)
+            message_danse = ("chefsp1PomPon " * nombre_danse).strip()
+            twSock.sendMessage(message_danse)
             self.last_used = time.time()

@@ -3,6 +3,7 @@ from .CartCommandInterpreter import CartCommandInterpreter
 from .ReveilCommandInterpreter import ReveilCommandInterpreter
 from .LurkCommandInterpreter import LurkCommandInterpreter
 from .InsulteIACommandInterpreter import InsulteIACommandInterpreter
+from .DanseCommandInterpreter import DanseCommandInterpreter
 import time
 
 class MessageManager:
@@ -11,7 +12,8 @@ class MessageManager:
                              CartCommandInterpreter(cooldown=10),
                              ReveilCommandInterpreter(cooldown=10),
                              LurkCommandInterpreter(cooldown=3),
-                             InsulteIACommandInterpreter(cooldown=30)]
+                             InsulteIACommandInterpreter(cooldown=30),
+                             DanseCommandInterpreter(cooldown=100)]
 
     def register_interpreter(self, interpreter):
         self.interpreters.append(interpreter)
@@ -22,8 +24,8 @@ class MessageManager:
                 if interpreter.activationCommand in message.lower():
                     if interpreter.can_execute():
                         interpreter.execute(username, message, twSock)
-                    else:
-                        remaining = int(interpreter.cooldown - (time.time() - interpreter.last_used))
-                        twSock.sendMessage(f"{interpreter.activationCommand} en cooldown ({remaining})s")
+                    #else:
+                     #   remaining = int(interpreter.cooldown - (time.time() - interpreter.last_used))
+                      #  twSock.sendMessage(f"{interpreter.activationCommand} en cooldown ({remaining})s")
             except Exception as e:
                 print(f"Erreur dans l'interpreter {interpreter}: {e}")

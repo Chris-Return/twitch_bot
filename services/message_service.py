@@ -13,13 +13,12 @@ def save_twitch_message(username, content, skip_user_check=False):
             if not user:
                 user = AppUser(pseudo=username, role_id=1)
                 db.add(user)
-                db.flush() # Récupère l'ID immédiatement
+                db.flush()
             user_id = user.id
         else:
             user = db.query(AppUser).filter(AppUser.pseudo == username).first()
             user_id = user.id
 
-        # Insertion du message
         new_msg = ChatMessage(content=content, user_id=user_id)
         db.add(new_msg)
 
