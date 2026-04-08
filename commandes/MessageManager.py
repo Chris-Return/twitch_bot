@@ -4,16 +4,20 @@ from .ReveilCommandInterpreter import ReveilCommandInterpreter
 from .LurkCommandInterpreter import LurkCommandInterpreter
 from .InsulteIACommandInterpreter import InsulteIACommandInterpreter
 from .DanseCommandInterpreter import DanseCommandInterpreter
-import time
+from .LiveReactIACommandInterpreter import LiveReactIACommandInterpreter
+from IA.gemini import GeminiManager
 
 class MessageManager:
     def __init__(self):
+        self.gemini_bot = GeminiManager()
         self.interpreters = [AyaCommandInterpreter(cooldown=10),
                              CartCommandInterpreter(cooldown=10),
                              ReveilCommandInterpreter(cooldown=10),
                              LurkCommandInterpreter(cooldown=3),
-                             InsulteIACommandInterpreter(cooldown=30),
-                             DanseCommandInterpreter(cooldown=100)]
+                             InsulteIACommandInterpreter(self.gemini_bot, cooldown=30),
+                             DanseCommandInterpreter(cooldown=100),
+                             LiveReactIACommandInterpreter(self.gemini_bot, cooldown=0)]
+        
 
     def register_interpreter(self, interpreter):
         self.interpreters.append(interpreter)

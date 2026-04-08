@@ -1,13 +1,12 @@
 from .CommandInterpreter import CommandInterpreter
-from IA.gemini import GeminiManager
 from services.message_service import get_last_messages_from_db
 import re
 
 class InsulteIACommandInterpreter(CommandInterpreter):
-    def __init__(self, cooldown=30):
+    def __init__(self, gemini_bot, cooldown=30):
         super().__init__(cooldown)
         self.activationCommand = "!insulte"
-        self.gemini_bot = GeminiManager()
+        self.gemini_bot = gemini_bot
 
     def execute(self, username, message, twSock):
         match = re.search(r"!insulte\s+@?(\w+)", message)
@@ -29,7 +28,6 @@ class InsulteIACommandInterpreter(CommandInterpreter):
                 f"{'- ' + '\n- '.join(messages_bdd)}\n\n"
                 f"CONSIGNE : Génère une petite pique bien sentie en t'adressant directement à {cible}."
             )
-
         try:
             pique = self.gemini_bot.envoyer_message(prompt)
             if pique:

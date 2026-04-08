@@ -1,6 +1,7 @@
 import os
 import sys
 import io
+import random
 from dotenv import load_dotenv
 from google import genai
 
@@ -8,7 +9,6 @@ class GeminiManager:
     def __init__(self, preprompt_filename="preprompt.md"):
         load_dotenv()
         
-        # Configuration de l'encodage pour la console
         if sys.stdout.encoding != 'utf-8':
             sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8')
         
@@ -19,55 +19,48 @@ class GeminiManager:
         self.client = genai.Client(api_key=self.api_key)
         self.model_id = "gemini-3.1-flash-lite-preview"
         
-        # Chemin dynamique vers le preprompt dans le dossier IA
         current_dir = os.path.dirname(__file__)
         self.preprompt_path = os.path.join(current_dir, preprompt_filename)
         
-        # Initialisation de la session avec le contexte Twitch
+        # Initialisation de la session avec le socle commun
         self.chat_session = self._initialiser_session()
 
     def _charger_preprompt(self):
-        """Récupère les règles de conduite et le style de réponse (piques Twitch)."""
+        """Charge les règles de base (TOS, personnalité générale)."""
         try:
             with open(self.preprompt_path, 'r', encoding='utf-8') as f:
                 return f.read()
         except FileNotFoundError:
-            # Fallback si le fichier est absent : on définit un comportement par défaut
-            return (
-                "Tu es un bot Twitch humoristique. Tu dois générer des petites piques "
-                "ironiques mais toujours respectueuses et conformes aux règles de Twitch."
-            )
+            return "Tu es un bot Twitch. Sois bref et respecte les TOS."
 
     def _initialiser_session(self):
-        """
-        Crée la session de chat. Le preprompt est injecté ici en tant qu'instruction 
-        système, l'IA s'en souviendra durant toute la durée de l'objet.
-        """
-        instructions = self._charger_preprompt()
-        
         return self.client.chats.create(
             model=self.model_id,
             config={
-                "system_instruction": instructions,
-                "temperature": 0.8, # Un peu plus élevé pour favoriser l'humour/créativité
+                "system_instruction": self._charger_preprompt(),
+                "temperature": 0.8,
             }
         )
 
-    def envoyer_message(self, message_utilisateur):
+    def envoyer_message(self, message_utilisateur, fallback=True):
         """
-        Prend un message (ex: issu de la BDD) et retourne la pique de l'IA.
+        Envoie le message à l'IA. Si l'IA est indisponible, 
+        renvoie une phrase de secours aléatoire.
         """
+        # Liste de phrases de secours (style "banter" Twitch)
+        phrases_secours = [
+            "Je prends une pause café, reviens plus tard. Kappa",
+            "Mon cerveau est en train de fondre, réessaie dans une minute.",
+            "Trop de messages, je ne vous écoute plus ! ResidentSleeper",
+            "L'IA est momentanément partie en vacances. LUL",
+            "Erreur 404 : Mon envie de répondre a disparu.",
+            "Je réfléchis... Enfin, j'essaie. Repose ta question plus tard !"
+        ]
+
         try:
-            # Envoi simple du texte sans gestion d'image
             response = self.chat_session.send_message(message_utilisateur)
             return response.text
+            
         except Exception as e:
-            return f"Erreur lors de la génération de la pique : {e}"
-
-# --- TEST RAPIDE ---
-if __name__ == "__main__":
-    bot = GeminiManager()
-    # Simulation d'un message Twitch récupéré
-    test_msg = "On peut farmer des rires de bébés"
-    print(f"User: {test_msg}")
-    print(f"Bot: {bot.envoyer_message(test_msg)}")
+            print(f"DEBUG - Erreur API Gemini : {e}", flush=True) 
+            return random.choice(phrases_secours) if fallback else None
