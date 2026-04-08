@@ -37,7 +37,7 @@ class LiveReactIACommandInterpreter(CommandInterpreter):
                 twSock.sendMessage(pique)
                 self.last_used = time.time()
                 self.message_count = 0
-                self.target_count = random.randint(30, 70)
+                self.target_count = random.randint(70, 100)
 
         except Exception as e:
             print(f"Erreur lors du RandomBanter : {e}", flush=True)
