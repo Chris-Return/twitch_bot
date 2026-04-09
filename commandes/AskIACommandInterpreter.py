@@ -11,7 +11,7 @@ class AskIACommandInterpreter(CommandInterpreter):
 
     def execute(self, username, message, twSock):
         print(username)
-        if username != "ChrisReturn":
+        if username not in ["ChrisReturn", "minmaj", "Zarakaih"]:
             return
 
         prompt_final = f"L'administrateur {username} a posé une question : {message}. Répond lui de façon bienveillante avec de vraies informations"
