@@ -9,7 +9,7 @@ class LiveReactIACommandInterpreter(CommandInterpreter):
         self.activationCommand = ""
         self.gemini_bot = gemini_bot
         self.message_count = 0
-        self.target_count = random.randint(70, 100)
+        self.target_count = random.randint(100, 150)
 
     def execute(self, username, message, twSock):
         self.message_count += 1
@@ -37,7 +37,7 @@ class LiveReactIACommandInterpreter(CommandInterpreter):
                 twSock.sendMessage(pique)
                 self.last_used = time.time()
                 self.message_count = 0
-                self.target_count = random.randint(70, 100)
+                self.target_count = random.randint(100, 150)
 
         except Exception as e:
             print(f"Erreur lors du RandomBanter : {e}", flush=True)

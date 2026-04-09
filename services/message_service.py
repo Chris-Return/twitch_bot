@@ -39,7 +39,6 @@ def get_last_messages_from_db(pseudo, limit=40):
 def get_global_last_messages(limit=50):
     """Récupère les X derniers messages du chat, peu importe l'auteur."""
     with get_session() as db:
-        # On récupère le pseudo et le contenu
         messages = (
             db.query(AppUser.pseudo, ChatMessage.content)
             .join(AppUser)
@@ -47,5 +46,5 @@ def get_global_last_messages(limit=50):
             .limit(limit)
             .all()
         )
-        # On formate pour que l'IA sache qui a dit quoi
+
         return [f"{m.pseudo}: {m.content}" for m in messages]
