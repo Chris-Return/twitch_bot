@@ -5,13 +5,13 @@ class CommandInterpreter:
         self.cooldown = cooldown    # temps en secondes
         self.last_used = 0          # timestamp de la dernière exécution
         self.actualTag = ""         # tag pour savoir si la commande sera activée ou non
-        self.requiredRole = ""      # Roles requis pour utiliser la commande
+        self.requiredRoleLevel = 0       # Roles requis pour utiliser la commande
         self.activationCommand = "" # Commande permettant d'activer le script
 
     def can_execute(self):
         return time.time() - self.last_used >= self.cooldown
 
-    def execute(self, username: str, message: str, sock):
+    def execute(self, username: str, message: str, sock, list = None):
         """
         Méthode à override dans les classes filles.
         username: auteur du message

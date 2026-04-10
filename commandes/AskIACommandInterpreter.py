@@ -10,7 +10,6 @@ class AskIACommandInterpreter(CommandInterpreter):
         self.gemini_bot = gemini_bot
 
     def execute(self, username, message, twSock):
-        print(username)
         if username not in ["ChrisReturn", "minmaj", "Zarakaih"]:
             return
 

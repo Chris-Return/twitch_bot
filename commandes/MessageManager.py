@@ -34,4 +34,4 @@ class MessageManager:
                      #   remaining = int(interpreter.cooldown - (time.time() - interpreter.last_used))
                       #  twSock.sendMessage(f"{interpreter.activationCommand} en cooldown ({remaining})s")
             except Exception as e:
-                print(f"Erreur dans l'interpreter {interpreter}: {e}")
+                print(f"Erreur dans l'interpreter {interpreter}: {e}", flush=True)

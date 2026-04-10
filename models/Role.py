@@ -8,5 +8,6 @@ class Role(Base):
 
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     name: Mapped[str] = mapped_column(String, unique=True)
+    level: Mapped[int] = mapped_column(Integer, unique=True)
 
     users = relationship("AppUser", back_populates="role")
