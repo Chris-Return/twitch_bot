@@ -3,6 +3,7 @@ from commandes.CommandInterpreter import CommandInterpreter
 from services.user_service import get_user_level
 from constantes import constantes
 from .outils.IASendMessage import IASendMessage
+from .outils.IASetRoleLevel import IASetRoleLevel
 from services.message_service import get_global_last_messages
 
 class IABrain(CommandInterpreter):
@@ -11,7 +12,8 @@ class IABrain(CommandInterpreter):
         self.activationCommand = "cheffouhighbot"
         self.gemini_bot = gemini_bot
         self.IAinterpreters = [
-            IASendMessage()
+            IASendMessage(),
+            IASetRoleLevel()
         ]
 
     def execute(self, username, message, twSock):
