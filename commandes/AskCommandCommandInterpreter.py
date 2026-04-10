@@ -1,8 +1,7 @@
 from .CommandInterpreter import CommandInterpreter
 import time
-import random
 
-class AyaCommandInterpreter(CommandInterpreter):
+class AskCommandCommandInterpreter(CommandInterpreter):
     def __init__(self, cooldown=30):
         super().__init__(cooldown)
         self.activationCommand = "!commande"

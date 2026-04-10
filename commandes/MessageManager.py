@@ -3,6 +3,7 @@ from .CartCommandInterpreter import CartCommandInterpreter
 from .ReveilCommandInterpreter import ReveilCommandInterpreter
 from .LurkCommandInterpreter import LurkCommandInterpreter
 from .DanseCommandInterpreter import DanseCommandInterpreter
+from .AskCommandCommandInterpreter import AskCommandCommandInterpreter
 from IA.brain import IABrain 
 from IA.gemini import GeminiManager
 
@@ -14,6 +15,7 @@ class MessageManager:
                              ReveilCommandInterpreter(cooldown=10),
                              LurkCommandInterpreter(cooldown=3),
                              DanseCommandInterpreter(cooldown=100),
+                             AskCommandCommandInterpreter(cooldown=20),
                              IABrain(self.gemini_bot)]
         
 
