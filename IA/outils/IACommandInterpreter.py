@@ -1,5 +1,4 @@
 
-
 class IACommandInterpreter:
     def __init__(self):
         self.required_role_level = 0

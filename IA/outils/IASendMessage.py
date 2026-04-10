@@ -1,0 +1,12 @@
+from commandes.CommandInterpreter import CommandInterpreter
+from constantes import constantes
+import re
+
+class IASendMessage(CommandInterpreter):
+    def __init__(self):
+        super().__init__()
+        self.required_role_level = constantes.ROLE_LEVEL_VIP
+        self.activationCommand="TALK"
+
+    def execute(self, username: str, message: str, sock, list = None):
+        sock.sendMessage(list[0])

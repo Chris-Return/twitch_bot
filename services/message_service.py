@@ -3,6 +3,7 @@ from models.AppUser import AppUser
 from models.ChatMessage import ChatMessage
 from sqlalchemy import desc
 from sqlalchemy import func
+from datetime import datetime, timedelta
 
 def save_twitch_message(username, content, skip_user_check=False):
     with get_session() as db:
@@ -35,13 +36,15 @@ def get_last_messages_from_db(pseudo, limit=40):
         )
 
         return [m.content for m in messages]
-    
-def get_global_last_messages(limit=50):
-    """Récupère les X derniers messages du chat, peu importe l'auteur."""
+
+def get_global_last_messages(limit=40):
     with get_session() as db:
+        time_threshold = datetime.now() - timedelta(hours=2)
+
         messages = (
             db.query(AppUser.pseudo, ChatMessage.content)
             .join(AppUser)
+            .filter(ChatMessage.created_at >= time_threshold)
             .order_by(desc(ChatMessage.created_at))
             .limit(limit)
             .all()

@@ -24,13 +24,8 @@ class LurkCommandInterpreter(CommandInterpreter):
         ]
 
     def execute(self, username, message, twSock):
-        if username == "Zarakaih":
-            phrase = random.choice(self.ennemiPhrasesList)
-            response = phrase.format(username=username, counter=self.counter)
-            twSock.sendMessage(response)
-            self.last_used = time.time()
-        else:
-            phrase = random.choice(self.lurkPhrasesList)
-            response = phrase.format(username=username, counter=self.counter)
-            twSock.sendMessage(response)
-            self.last_used = time.time()
+        phrases_source = self.ennemiPhrasesList if username == "Zarakaih" else self.lurkPhrasesList
+        phrase = random.choice(phrases_source)
+        response = phrase.format(username=username, counter=self.counter)
+        twSock.sendMessage(response)
+        self.last_used = time.time()

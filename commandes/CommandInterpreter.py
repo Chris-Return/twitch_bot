@@ -10,6 +10,9 @@ class CommandInterpreter:
 
     def can_execute(self):
         return time.time() - self.last_used >= self.cooldown
+    
+    def pre_load(self):
+        pass
 
     def execute(self, username: str, message: str, sock, list = None):
         """

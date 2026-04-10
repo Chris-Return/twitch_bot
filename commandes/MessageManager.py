@@ -5,7 +5,7 @@ from .LurkCommandInterpreter import LurkCommandInterpreter
 from .InsulteIACommandInterpreter import InsulteIACommandInterpreter
 from .DanseCommandInterpreter import DanseCommandInterpreter
 from .LiveReactIACommandInterpreter import LiveReactIACommandInterpreter
-from .AskIACommandInterpreter import AskIACommandInterpreter
+from IA.brain import IABrain 
 from IA.gemini import GeminiManager
 
 class MessageManager:
@@ -18,7 +18,7 @@ class MessageManager:
                              InsulteIACommandInterpreter(self.gemini_bot, cooldown=30),
                              DanseCommandInterpreter(cooldown=100),
                              LiveReactIACommandInterpreter(self.gemini_bot, cooldown=0),
-                             AskIACommandInterpreter(self.gemini_bot, cooldown=10)]
+                             IABrain(self.gemini_bot)]
         
 
     def register_interpreter(self, interpreter):
