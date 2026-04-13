@@ -29,7 +29,7 @@ class IABrain(CommandInterpreter):
                 f"Voici les derniers messages du chat :\n"
                 f"{history_context}\n"
                 f"--- \n"
-                f"L'utilisateur {username} vient de dire : {message}. "
+                f"L'utilisateur {username} qui dispose du rôle vient de dire : {message}. "
                 f"Réponds-lui en tenant compte du contexte ci-dessus si nécessaire. "
                 f"Adresse-toi directement au(x) concerné(s)."
             )
