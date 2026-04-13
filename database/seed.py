@@ -28,7 +28,11 @@ def seed_roles():
                 AppUser(pseudo="ChefSpirite", role=admin_role),
                 AppUser(pseudo="ChrisReturn", role=admin_role),
                 AppUser(pseudo="Zarakaih", role=vip_role),
-                AppUser(pseudo="minmaj", role=vip_role)
+                AppUser(pseudo="minmaj", role=vip_role),
+                AppUser(pseudo="mewtree1993sh", role=vip_role),
+                AppUser(pseudo="DawCoeur_", role=vip_role),
+                AppUser(pseudo="Petonns", role=vip_role),
+                AppUser(pseudo="maori_2", role=vip_role)
             ])
         
         # Le commit final valide toutes les insertions

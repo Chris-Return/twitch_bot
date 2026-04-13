@@ -26,7 +26,7 @@ jobs:
         uses: dawidd6/action-download-artifact@v3
         continue-on-error: true
         with:
-          name: sqlite-db-v2
+          name: sqlite-db-v3
           path: .
           if_no_artifact_found: warn
 
@@ -75,6 +75,6 @@ jobs:
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: sqlite-db-v2
+          name: sqlite-db-v3
           path: backup.db.gz
           retention-days: 30
