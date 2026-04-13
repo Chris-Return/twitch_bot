@@ -68,7 +68,7 @@ def get_user_level(username: str) -> int:
             return result[0] if result else 0
 
     except Exception as e:
-        print(f"[DB] Erreur lors de la récupération du niveau de {username} : {e}", flush="True")
+        print(f"[DB] Erreur lors de la récupération du niveau de {username} : {e}", flush=True)
         return 0
 
 def update_user_role(username: str, role_name: str):
