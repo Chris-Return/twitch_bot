@@ -1,5 +1,6 @@
 from commandes.CommandInterpreter import CommandInterpreter
 from constantes import constantes
+from services.message_service import save_twitch_message
 import re
 
 class IASendMessage(CommandInterpreter):
@@ -9,4 +10,5 @@ class IASendMessage(CommandInterpreter):
         self.activationCommand="TALK"
 
     def execute(self, username: str, message: str, sock, list = None):
+        save_twitch_message("CheffouHighBot", message, skip_user_check=False)
         sock.sendMessage(list[0])

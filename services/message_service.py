@@ -12,7 +12,7 @@ def save_twitch_message(username, content, skip_user_check=False):
         if not skip_user_check:
             user = db.query(AppUser).filter(AppUser.pseudo == username).first()
             if not user:
-                user = AppUser(pseudo=username, role_id=3)
+                user = AppUser(pseudo=username, role_id=5)
                 db.add(user)
                 db.flush()
             user_id = user.id
