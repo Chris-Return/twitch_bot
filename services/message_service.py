@@ -37,7 +37,7 @@ def get_last_messages_from_db(pseudo, limit=40):
 
         return [m.content for m in messages]
 
-def get_global_last_messages(limit=40):
+def get_global_last_messages(limit=30):
     with get_session() as db:
         time_threshold = datetime.now() - timedelta(hours=2)
 
