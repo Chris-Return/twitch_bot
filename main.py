@@ -1,5 +1,5 @@
 from database.init_db import init_db
-from database.seed import seed_roles
+from database.seed import seed_database
 from services.signal_handlers import register_shutdown_signals
 from twitchsocket.TwitchBot import connect_to_twitch
 from workers.user_worker import start_worker
@@ -7,7 +7,7 @@ from workers.user_worker import start_worker
 def main():
     init_db()
     print("Database initialized", flush=True)
-    seed_roles()
+    seed_database()
 
 if __name__ == "__main__":
     register_shutdown_signals()

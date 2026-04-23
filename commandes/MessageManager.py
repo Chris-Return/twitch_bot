@@ -4,6 +4,7 @@ from .ReveilCommandInterpreter import ReveilCommandInterpreter
 from .LurkCommandInterpreter import LurkCommandInterpreter
 from .DanseCommandInterpreter import DanseCommandInterpreter
 from .AskCommandCommandInterpreter import AskCommandCommandInterpreter
+from IA.ConversationHistory import twitch_history
 from IA.brain import IABrain 
 from IA.gemini import GeminiManager
 
@@ -23,13 +24,12 @@ class MessageManager:
         self.interpreters.append(interpreter)
 
     def propagation(self, username, message, twSock):
+        twitch_history.add_message(username, message)
         for interpreter in self.interpreters:
             try:
                 if interpreter.activationCommand in message.lower():
                     if interpreter.can_execute():
                         interpreter.execute(username, message, twSock)
-                    #else:
-                     #   remaining = int(interpreter.cooldown - (time.time() - interpreter.last_used))
-                      #  twSock.sendMessage(f"{interpreter.activationCommand} en cooldown ({remaining})s")
+
             except Exception as e:
                 print(f"Erreur dans l'interpreter {interpreter}: {e}", flush=True)

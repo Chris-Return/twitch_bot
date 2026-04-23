@@ -9,5 +9,6 @@ class AppUser(Base):
     id: Mapped[int] = mapped_column(Integer, primary_key=True)
     pseudo: Mapped[str] = mapped_column(String, unique=True, index=True)
     role_id: Mapped[int] = mapped_column(ForeignKey("roles.id"))
+    affinity = relationship("UserAffinity", back_populates="user", uselist=False)
     role = relationship("Role", back_populates="users")
     messages = relationship("ChatMessage", back_populates="user")

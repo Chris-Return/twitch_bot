@@ -1,6 +1,7 @@
 from database.session import get_session
 from models.AppUser import AppUser
 from models.ChatMessage import ChatMessage
+from models.UserAffinity import UserAffinity
 from sqlalchemy import desc
 from sqlalchemy import func
 from datetime import datetime, timedelta
@@ -15,6 +16,11 @@ def save_twitch_message(username, content, skip_user_check=False):
                 user = AppUser(pseudo=username, role_id=5)
                 db.add(user)
                 db.flush()
+
+                new_affinity = UserAffinity(user_id=user.id,affinity_score=0,respect_score=0,love_score=0)
+                db.add(new_affinity)
+                db.flush()
+                
             user_id = user.id
         else:
             user = db.query(AppUser).filter(AppUser.pseudo == username).first()
