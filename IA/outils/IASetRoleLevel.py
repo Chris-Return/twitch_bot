@@ -8,7 +8,7 @@ class IASetRoleLevel(CommandInterpreter):
     def __init__(self):
         super().__init__()
         # Seuls les ADMIN peuvent déclencher cet outil via l'IA
-        self.requiredRoleLevel = constantes.ROLE_LEVEL_ADMIN 
+        self.requiredRoleLevel = constantes.ROLE_LEVEL_CO_ADMIN 
         self.activationCommand = "SET_PERMISSION_LEVEL"
 
     def execute(self, username, message, twSock, args=None):
@@ -16,6 +16,7 @@ class IASetRoleLevel(CommandInterpreter):
             print("Erreur : Arguments insuffisants pour SET_PERMISSION_LEVEL")
             return
 
+        print(f"Arguments : {args}", flush=True)
         target_pseudo = args[0].replace("@", "").strip() # On nettoie le @ si l'IA l'ajoute
 
         # Sécurité

@@ -28,7 +28,7 @@ class IABrain(CommandInterpreter):
         user_role_level = get_user_level(username)
         user_role_name = get_user_role(username)
 
-        if user_role_level < constantes.ROLE_LEVEL_VIP:
+        if user_role_level < constantes.ROLE_LEVEL_VIEWER_ASSIDU:
             return
         
         try:
