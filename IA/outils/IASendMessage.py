@@ -1,5 +1,6 @@
 from commandes.CommandInterpreter import CommandInterpreter
 from constantes import constantes
+from IA.ConversationHistory import twitch_history
 from services.message_service import save_twitch_message
 import re
 
@@ -10,5 +11,6 @@ class IASendMessage(CommandInterpreter):
         self.activationCommand="TALK"
 
     def execute(self, username: str, message: str, sock, list = None):
-        save_twitch_message("CheffouHighBot", list[0], skip_user_check=False)
+        save_twitch_message(constantes.TWITCH_USERNAME, list[0], skip_user_check=False)
+        twitch_history.add_message(constantes.TWITCH_USERNAME, list[0])
         sock.sendMessage(list[0])
