@@ -26,6 +26,9 @@ class ConversationHistory:
     def get_context(self):
         """Retourne l'historique sous forme d'une seule chaîne de caractères."""
         return "\n".join(self.history)
+    
+    def get_number_of_context(self):
+        return self.history.__len__()
 
     def clear(self):
         """Efface l'historique."""

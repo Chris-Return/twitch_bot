@@ -26,6 +26,7 @@ class MessageManager:
     def propagation(self, username, message, twSock):
         twitch_history.add_message(username, message)
         for interpreter in self.interpreters:
+            interpreter.before_execute(twSock)
             try:
                 if interpreter.activationCommand in message.lower():
                     if interpreter.can_execute():

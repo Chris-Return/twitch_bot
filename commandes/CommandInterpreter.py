@@ -14,6 +14,9 @@ class CommandInterpreter:
     def pre_load(self):
         pass
 
+    def before_execute(self, twSock):
+        pass
+
     def execute(self, username: str, message: str, sock, list = None):
         """
         Méthode à override dans les classes filles.
