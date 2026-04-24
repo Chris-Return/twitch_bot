@@ -10,6 +10,7 @@ from .outils.IAAddAffinity import IAAddAffinity
 from .outils.IAAddLove import IAAddLove
 from .outils.IAAddRespect import IAAddRespect
 from IA.ConversationHistory import twitch_history
+import threading
 
 class IABrain(CommandInterpreter):
     def __init__(self, gemini_bot, cooldown=10):
@@ -31,6 +32,15 @@ class IABrain(CommandInterpreter):
         if user_role_level < constantes.ROLE_LEVEL_VIEWER_ASSIDU:
             return
         
+        thread = threading.Thread(
+            target=self.execute_async_wrapper, 
+            args=(username, message, twSock, user_role_name, user_role_level)
+        )
+        thread.daemon = True
+        thread.start()
+
+        
+    def execute_async_wrapper(self, username, message, twSock, user_role_name, user_role_level):
         try:
             history_context = twitch_history.get_context()
             twitch_history.clear()
@@ -48,7 +58,6 @@ class IABrain(CommandInterpreter):
             )
 
             response = self.gemini_bot.envoyer_message(prompt)
-            print(f"prompt actuel :\n {prompt}", flush=True)
             print(f"Réponse de l'IA : {response}", flush=True)
             if not response:
                 return
@@ -69,5 +78,5 @@ class IABrain(CommandInterpreter):
                         except Exception as e:
                             print(f"Erreur d'exécution dans {command_name}: {e}")
 
-        except:
+        except Exception as e:
             print(f"Erreur lors de la récupération de message IABrain : {e}", flush=True)

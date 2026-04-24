@@ -30,4 +30,4 @@ class IAAddRespect(CommandInterpreter):
                 new_score = max(-100, min(100, user_affinity.respect_score + points))
                 user_affinity.respect_score = new_score
                 session.commit()
-                print(f"[DB] Respect mis à jour pour {target_pseudo} : {new_score}")
+                print(f"[DB] Respect mis à jour pour {target_pseudo} : {new_score}", flush=True)
