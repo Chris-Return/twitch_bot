@@ -23,7 +23,7 @@ class LurkCommandInterpreter(CommandInterpreter):
             "@{username} Nice, on t'aime mais a petites doses.",
             "@{username} Wouah j'adore la légèreté de la délivrance.",
             "@{username} Bisous mon Zara ! Pouah c'est tellement pas naturel que j'en ai des boutons.",
-            "@{username} Disparaît engeance démoniaque. chefsp1MidFing",
+            "@{username} Disparaît engeance démoniaque. chefsp1MidFing ",
             "@{username} Si le paradis existe, j'y suis !"
         ]
 

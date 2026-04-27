@@ -18,7 +18,7 @@ class GeminiManager:
             raise ValueError("Erreur : La clé API 'GEMINI_API_KEY' est manquante.")
 
         self.client = genai.Client(api_key=self.api_key)
-        self.model_id = "gemini-3.1-flash-lite-preview"
+        self.model_id = "gemini-2.5-flash-lite"
         
         current_dir = os.path.dirname(__file__)
         self.preprompt_path = os.path.join(current_dir, preprompt_filename)
